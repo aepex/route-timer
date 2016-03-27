@@ -11,3 +11,5 @@ To start, add a trip and route you want to measure, start the timer, then stop i
 Each route will need several records in order to produce a good average. If you forget to stop the timer or otherwise need to clear an entry, you can do so with the '×' button to the right of an entry in the Trip Log.
 
 The app does not need to stay open while the timer is running, and no data is ever transmitted anywhere. You can export the data as JSON for further analysis, or clear everything from your device at any time.
+
+Run on your smartphone: https://aepex.github.com/route-timer
