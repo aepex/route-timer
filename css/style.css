@@ -1,0 +1,63 @@
+body {
+  font-family: Arial,sans-serif;
+  font-size: 14px;
+}
+button {
+  background-color: #EEE;
+  border: 1px solid #333;
+  cursor: pointer;
+  margin: 0 1em 1em 0;
+  padding: 0.8em;
+}
+  button:hover {
+    opacity: 0.8;
+  }
+div {
+  margin-bottom: 1em;
+}
+h2 {
+  border-bottom: 1px solid #CCC;
+  font-size: 1.4em;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th {
+  background-color: #EEE;
+  border-bottom: 2px solid #BBB;
+}
+td, th {
+  padding: 0.5em 0.5em 0.5em 0.2em;
+  text-align: left;
+  vertical-align: top;
+}
+tr:nth-child(odd) {
+  background: #f7f7f7;
+}
+select {
+  padding: 0.2em;
+}
+#helpLink {
+  display: block;
+  float: right;
+}
+#help {
+  background-color: #EEE;
+  border-bottom: 2px solid #BBB;
+  padding: 1em;
+}
+#startTimerButton {
+  background-color: #a3dda3;
+}
+#stopTimerButton {
+  background-color: #B15555;
+}
+#tripSummary td:first-child {
+  font-weight: bold;
+}
+.removeEntryButton {
+  font-size: 1.1em;
+  margin: 0;
+  padding: 0.1em 0.4em;
+}

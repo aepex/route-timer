@@ -1,0 +1,15 @@
+{
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "img/launcher-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "en-US",
+  "name": "Route Timer",
+  "short_name": "Route Timer",
+  "start_url": "index.html",
+  "theme_color": "#4bae4f"
+}

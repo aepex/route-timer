@@ -1,0 +1,87 @@
+<!doctype html>
+ <html>
+  <head>
+    <title>Route Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <a href="#" id="helpLink" v-on:click="state.help = 1" v-show="!state.help">Help</a>
+
+    <div id="help" v-show="state.help">
+      <h1>Route Timer</h1>
+      <p>This app helps you determine which route between two destinations is the fastest based on your own measured data.</p>
+      <p>A <strong>trip</strong> is traveling from A to B, e.g. Home to Work. Going the other direction (B to A) would be a separate trip.</p>
+      <p>A <strong>route</strong> is a particular path or method of travel for the selected trip, as long as it's consistent day to day. For example, one route could be taking the freeway home, and another for taking the backroads.</p>
+      <p>To start, add a trip and route you want to measure, start the timer, then stop it when you arrive. For best results, make the start and stop points the same across all routes, e.g. starting when you get in the car, and stopping when parked at work.</p>
+      <p>Each route will need several records in order to produce a good average. If you forget to stop the timer or otherwise need to clear an entry, you can do so with the '&times;' button to the right of an entry in the Trip Log.</p>
+      <p>The app does not need to stay open while the timer is running, and no data is ever transmitted anywhere. You can export the data as JSON for further analysis, or clear everything from your device at any time. (Clearing your browser's cache may erase data as well.)</p>
+      <p>If you are using <strong>Chrome for Android</strong>, you can add a specialized shortcut by pressing the menu button ( &vellip; ) and choosing <strong>Add to Home screen</strong>.</p>
+      <a href="#" v-on:click="state.help = 0">&times; Close Help</a><br><br>
+    </div>
+
+    <div id="selectors">
+      <div v-show="trips.list.length">
+        <label for="tripSelect">Trip: </label>
+        <select name="tripSelect" id="tripSelect" v-model="state.trip" v-on:change="getTrips">
+          <option value="{{ trip.id }}" v-for="trip in trips.list" track-by="id">{{ trip.name }}</option>
+        </select>
+      </div>
+      <div v-show="routes.list.length">
+        <label for="routeSelect">Route: </label>
+        <select name="routeSelect" id="routeSelect" v-model="state.route" v-on:change="updateState">
+          <option value="{{ route.id }}" v-for="route in routes.list" track-by="id">{{ route.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="dataButtons">
+      <button id="addTripButton" v-on:click="addTrip">Add New Trip</button>
+      <button id="addRouteButton" v-on:click="addRoute" v-show="trips.list.length">Add New Route</button>
+    </div>
+
+    <div id="timerButtons" v-show="routes.list.length">
+      <button id="stopTimerButton" v-show="timers.list.length" v-on:click="stopTimer">Stop Timer</button>
+      <button id="startTimerButton" v-else v-on:click="startTimer">Start Timer</button>
+    </div>
+
+    <div id="routeInfo" v-show="routes.list.length">
+      <h2>Summary</h2>
+      <table id="tripSummary">
+        <tr>
+          <th>Route</th><th>Fastest</th><th>Average</th><th>Slowest</th>
+        </tr>
+        <template v-for="route in trips.averages">
+          <tr>
+            <td>{{ route.name }}</td><td>{{ route.fastest | minutes }}</td><td>{{ route.average | minutes }}</td><td>{{ route.slowest | minutes }}</td>
+          </tr>
+        </template>
+      </table>
+
+      <h2>Trip Log</h2>
+      <table id="tripLog">
+        <tr>
+          <th>Departure</th><th>Arrival</th><th>Route</th><th>Duration</th><th>&nbsp;</th>
+        </tr>
+        <template v-for="entry in entries.list">
+          <tr>
+            <td>{{ entry.departureTime | date }}</td><td>{{ entry.arrivalTime | date }}</td><td>{{ entry.routeName }}</td><td>{{ entry.duration | minutes }}</td><td><button class="removeEntryButton" v-on:click="removeEntry(entry.id)">&times;</button></td>
+          </tr>
+        </template>
+      </table>
+
+    </div>
+
+    <button id="removeTripButton" v-show="trips.list.length" v-on:click="removeTrip">Remove This Trip</button>
+    <button id="removeRouteButton" v-show="routes.list.length" v-on:click="removeRoute">Remove This Route</button>
+    <button id="exportButton" v-show="routes.list.length" v-on:click="exportDatabase">Export Data</button>
+    <button id="removeAllButton" v-show="trips.list.length" v-on:click="clearAll">Clear All Data</button>
+
+    <script src="js/vue.min.js"></script>
+    <script src="js/dexie.min.js"></script>
+    <script src="js/timer.js"></script>
+
+  </body>
+</html>
